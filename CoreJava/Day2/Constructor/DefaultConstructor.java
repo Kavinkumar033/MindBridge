@@ -1,3 +1,4 @@
+//Create a class Book with default values for title and author. Write a default constructor to initialize these attributes.
 package Day2;
 class Book
 {

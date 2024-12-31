@@ -1,19 +1,20 @@
+//Create a class Animal with a method speak(). Derive classes Dog and Cat and override the speak() method to display appropriate sounds.
 package Day2;
-class Animal
+ class Animal
 {
    void Speak()
    {
        System.out.println("Each animal will give each sound");
    }
 }
-class Dog extends Animal
+ class Dog extends Animal
 {
     void Speak()
     {
         System.out.println("Dog will Bark");
     }
 }
-class Cat extends Dog
+ class Cat extends Dog
 {
     void Speak()
     {

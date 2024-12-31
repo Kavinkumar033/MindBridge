@@ -1,3 +1,4 @@
+//Create a program to exit a loop if the user enters the number 0 (use break).
 package Day2;
 import java.util.*;
 public class UsingBreak {

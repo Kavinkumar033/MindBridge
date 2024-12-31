@@ -1,3 +1,4 @@
+//Create a program to simulate a simple calculator using switch-case.
 package Day2;
 import java.util.*;
 public class SimpleCalculator {

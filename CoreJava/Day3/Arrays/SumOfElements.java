@@ -1,3 +1,4 @@
+//Create a program to calculate the sum of all elements in an array.
 package Day3;
 import java.util.*;
 public class SumOfElements {

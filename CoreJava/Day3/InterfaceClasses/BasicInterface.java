@@ -1,3 +1,4 @@
+//Create an interface Animal with methods eat() and sleep(). Implement this interface in classes Dog and Cat.
 package Day3;
 import java.util.*;
  interface Animal

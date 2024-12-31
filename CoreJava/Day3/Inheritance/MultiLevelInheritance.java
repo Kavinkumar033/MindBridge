@@ -1,3 +1,4 @@
+//Create a class Shape with a method area(). Derive a class Rectangle with attributes length and breadth, and override the area() method. Further, derive a class Square from Rectangle and demonstrate multilevel inheritance.
 package Day3;
 class Shape
 {

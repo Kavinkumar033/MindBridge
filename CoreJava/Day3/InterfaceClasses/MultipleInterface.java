@@ -1,3 +1,4 @@
+//Create two interfaces Printer with a method print() and Scanner with a method scan(). Create a class AllInOne that implements both interfaces.
 package Day3;
 
 import java.awt.color.ICC_ColorSpace;

@@ -1,3 +1,4 @@
+//Write a program to print a pyramid pattern using nested loops.
 package Day2;
 
 public class PyramidPattern {
