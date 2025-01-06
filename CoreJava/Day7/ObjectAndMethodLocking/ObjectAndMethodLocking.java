@@ -11,30 +11,24 @@
 //Show how the locks affect the execution order of the methods.
 package Day7;
 
-class  PrintString
+class SharedPrinter
 {
-   public static synchronized   void Display(String str)
-    {
-        for(int i=0;i<5;i++) {
-            System.out.println(Thread.currentThread().getClass() + " -> " +str+""+i);
 
+    public synchronized void printString(String str, int n) {
+
+        for(int i = 0; i < n; i++){
+            System.out.println(str);
             try {
-                Thread.sleep(1000);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }
     }
 
-}
-
-class Countdown
-{
-    public static synchronized void DisplayCountdown(int n)
-    {
-        for (int i=1;i<=n;i++)
-        {
-            System.out.println("Countdown -> "+i);
+    public synchronized void countDown(int n){
+        for(int i = 0; i < n; i++){
+            System.out.println(i);
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -43,38 +37,72 @@ class Countdown
         }
     }
 }
-class SharedPrinter extends Thread
-{
-    SharedPrinter ref;
-    Boolean str;
-    String name;
-    public SharedPrinter(SharedPrinter ref , Boolean str) {
-        this.ref=ref;
-        this.str=str;
-    }
-    public SharedPrinter() {
 
-    }
-    @Override
-    public void run() {
-        if(str!=true)
-        {
-            PrintString.Display("");
-        }
-        else
-        {
-            Countdown.DisplayCountdown(5);
+class Printer{
+
+    private static Object lock1 = new Object();
+    private static Object lock2 = new Object();
+
+    public static void printString(String str, int n){
+        synchronized (lock1){
+            for(int i = 0; i < n; i++){
+                System.out.println(str);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
     }
 
+    public void countDown(int n){
+        synchronized (lock2){
+            for(int i = 0; i < n; i++){
+                System.out.println(i);
+                try {
+                    Thread.sleep(700);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
 }
-public class ObjectAndMethodLocking {
-    public static void main(String[] args) {
-  SharedPrinter s1 = new SharedPrinter();
-   Thread ti = new SharedPrinter(s1,true);
-   Thread t2 = new SharedPrinter(s1,false);
-   ti.start();
-   t2.start();
 
+public class ObjectAndMethodLocking {
+    public static void main(String[] args) throws InterruptedException {
+        SharedPrinter sharedPrinter = new SharedPrinter();
+        System.out.println("Object synchronized");
+        //Object Locking
+        Thread thread1 = new Thread(() ->{
+            sharedPrinter.printString("Kavin", 10);
+        });
+
+        Thread thread2 = new Thread(() ->{
+            sharedPrinter.countDown(10);
+        });
+
+        thread2.start();
+        thread1.start();
+
+        thread1.join();
+        thread2.join();
+        System.out.println(" Method synchronized ");
+
+        Printer printer = new Printer();
+        Thread thread3 = new Thread(()->
+        {
+            Printer.printString("Teddy",5);
+        });
+        Thread thread4 = new Thread(()->
+        {
+            printer.countDown(5);
+        });
+        thread3.start();
+        thread4.start();
+
+        thread3.join();
+        thread4.join();
     }
 }
