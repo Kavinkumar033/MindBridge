@@ -1,16 +1,21 @@
 package Day15;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class Tranform {
-    public static Map<String,String> StringTransform(List<Students> names)
+    public static void ConvertToUpperCase(List<Students> list, Function<Students,String> function)
     {
-        return names.stream().collect(Collectors.toMap(name->name.getName(),name->"Student : "+name.getName().toUpperCase()));
-
-        //return names.stream().collect(Collectors.toMap(name->name.getName(),name->name.getName().toUpperCase()));
+        Map<String,String> map = new HashMap<>();
+        for(Students list1 : list)
+            map.put(list1.getName(),"Student : "+function.apply(list1));
+        for (Map.Entry<String,String> entry : map.entrySet())
+            System.out.println("Name : "+entry.getKey()+" && "+entry.getValue());
     }
         public static void main(String[] args){
             Students s1 = new Students("Kavin", 7.5);
@@ -25,9 +30,7 @@ public class Tranform {
             list.add(s3);
             list.add(s4);
             list.add(s5);
-
-            Map<String , String> trans = StringTransform(list);
-            trans.forEach((original, transformed)-> System.out.println("Original : "+original+" [ Tranformed : "+transformed+" ]"));
+            ConvertToUpperCase(list,(str)-> str.getName().toUpperCase());
         }
     }
 

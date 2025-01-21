@@ -2,11 +2,17 @@ package Day15;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class Average {
-    public static double ToCalculateAverage(List<Students> list1)
+    public static void ToCalculateAverage(List<Students> list1, Consumer<Double> consumer  )
     {
-        return list1.stream().mapToDouble(list-> list.getCgpa()).average().orElse(0.0);
+        double sum=0;
+       for(Students list : list1)
+       {
+           sum = sum + list.getCgpa();
+       }
+       consumer.accept(sum);
     }
     public static void main(String[] args) {
         Students s1 = new Students("Kavin", 7.5);
@@ -22,7 +28,7 @@ public class Average {
         list.add(s4);
         list.add(s5);
 
-        double avg = ToCalculateAverage(list);
-        System.out.println("Average CGPA : "+avg);
+       ToCalculateAverage(list,(total)-> System.out.println("Average CGPA : "+(total/list.size())));
+
     }
 }

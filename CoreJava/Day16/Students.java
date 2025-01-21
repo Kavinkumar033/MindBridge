@@ -1,18 +1,17 @@
-package Day15;
-
+package Day16;
 public class Students {
     String name;
-    double cgpa;
+    double grade;
     String dept;
-    Students(String name,double cgpa)
-    {
-      this.name=name;
-      this.cgpa=cgpa;
-    }
-    Students(String name,double cgpa,String dept)
+    Students(String name,double grade)
     {
         this.name=name;
-        this.cgpa=cgpa;
+        this.grade=grade;
+    }
+    Students(String name,double grade,String dept)
+    {
+        this.name=name;
+        this.grade=grade;
         this.dept=dept;
     }
 
@@ -27,6 +26,14 @@ public class Students {
         this.dept = dept;
     }
 
+    public double getGrade() {
+        return grade;
+    }
+
+    public void setGrade(double grade) {
+        this.grade = grade;
+    }
+
     public String getName() {
         return name;
     }
@@ -35,18 +42,12 @@ public class Students {
         this.name = name;
     }
 
-    public double getCgpa() {
-        return cgpa;
-    }
 
-    public void setCgpa(double cgpa) {
-        this.cgpa = cgpa;
-    }
 
     @Override
     public String toString() {
         return
                 "[name='" + name + '\'' +
-                ", cgpa=" + cgpa +"]";
+                        ", grade=" + grade +"]";
     }
 }
