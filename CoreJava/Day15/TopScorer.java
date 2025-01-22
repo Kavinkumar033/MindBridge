@@ -18,47 +18,13 @@ public class TopScorer {
         list.add(s4);
         list.add(s5);
 
-
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*Map<String, Optional<Students>> topScorersByDept = list.stream()
+    Map<String, Optional<Students>> topScorersByDept = list.stream()
         .collect(Collectors.groupingBy(Students::getDept,
                 Collectors.maxBy(Comparator.comparingDouble(Students::getCgpa))
         ));
         topScorersByDept.forEach((department, student) -> {
         student.ifPresent(s -> System.out.println(department + " - Top Scorer: " + s));
-        });*/
+        });
+    }
+}
+
