@@ -17,6 +17,7 @@ public class TopScorer {
         list.add(s3);
         list.add(s4);
         list.add(s5);
+<<<<<<< HEAD
      Map<String, Optional<Students>> topScorersByDept = list.stream()
                 .collect(Collectors.groupingBy(Students::getDept,
                         Collectors.maxBy(Comparator.comparingDouble(Students::getCgpa))
@@ -61,3 +62,16 @@ public class TopScorer {
 
 
 
+=======
+
+    Map<String, Optional<Students>> topScorersByDept = list.stream()
+        .collect(Collectors.groupingBy(Students::getDept,
+                Collectors.maxBy(Comparator.comparingDouble(Students::getCgpa))
+        ));
+        topScorersByDept.forEach((department, student) -> {
+        student.ifPresent(s -> System.out.println(department + " - Top Scorer: " + s));
+        });
+    }
+}
+
+>>>>>>> ffbc4108ef1cd16267ffacd29303bfd2d61909ca
