@@ -1,87 +1,92 @@
 package Day18;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+class Student{
+    private String name;
+    private String department;
+    private List<Integer> mark;
+    private String grade;
+    public  Student(String name,String department,List<Integer>mark){
+        this.name=name;
+        this.department=department;
+        this.mark=mark;
+    }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public List<Integer> getMark() {
+        return mark;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+    public double getAverageMarks() {
+        return mark.stream().mapToInt(Integer::intValue).average().orElse(0.0);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s (%s): Avg = %.2f, Grade = %s", name, department, getAverageMarks(), grade);
+    }
+}
 public class StreamExample {
-
     public static void main(String[] args) {
-        List<Student> stuList = new ArrayList<>();
-
-        Student stu1 = new Student("Manoj", "Computer Science", new int[]{85, 90, 78, 88, 92});
-        Student stu2 = new Student("Poovarasan", "Mathematics", new int[]{70, 75, 80, 65, 60});
-        Student stu3 = new Student("Vijay", "Physics", new int[]{89, 95, 90, 99, 91});
-        Student stu4 = new Student("Srikanth", "Mathematics", new int[]{85, 80, 75, 70, 65});
-        Student stu5 = new Student("Kavin", "Computer Science", new int[]{90, 90, 98, 92, 97});
-        Student stu6 = new Student("Purushothaman", "Physics", new int[]{45, 55, 40, 29, 49});
-
-        stuList.add(stu1);
-        stuList.add(stu2);
-        stuList.add(stu3);
-        stuList.add(stu4);
-        stuList.add(stu5);
-        stuList.add(stu6);
-
-        stuList.forEach(System.out::println);
-        System.out.println("________________________________________________________________________");
-        System.out.println("\nTop 3 Students based on average marks:");
-        top_three(stuList);
-
-        System.out.println("________________________________________________________________________");
-        System.out.println("average marks for each department.");
-        average_marks(stuList);
-
-        System.out.println("________________________________________________________________________");
-        System.out.println("Top students in each department");
-        top_students(stuList);
-
-        System.out.println("________________________________________________________________________");
-        System.out.println("Count of students failed in each department:");
-        failed(stuList);
-
-    }
-
-    public static void top_three(List<Student> students) {
-        students.stream()
-                .sorted((s1, s2) -> Double.compare(s2.getAverage(), s1.getAverage())) // Sort based on average marks
-                .limit(3)
+        List<Student> students = Arrays.asList(
+                new Student("Kavin", "Computer Science", Arrays.asList(67, 78, 80, 89, 90)),
+                new Student("Kumar", "Mathematics", Arrays.asList(68, 98, 76, 69, 98)),
+                new Student("Manoj", "Physics", Arrays.asList(78, 98, 65, 78, 66)),
+                new Student("Prabhu", "Computer Science", Arrays.asList(95, 92, 90, 96, 94)),
+                new Student("vasanth", "Mathematics", Arrays.asList(88, 85, 82, 90, 87)),
+                new Student("Siva", "Physics", Arrays.asList(55, 60, 65, 58, 62)));
+        students.forEach(student -> {
+            double grade = student.getAverageMarks();
+            if (grade >= 85) {
+                student.setGrade("A");
+            } else if (grade >= 70) {
+                student.setGrade("B");
+            } else if (grade >= 50) {
+                student.setGrade("C");
+            } else {
+                student.setGrade("D");
+            }
+        });
+        students.stream().sorted(Comparator.comparingDouble(Student::getAverageMarks))
                 .forEach(System.out::println);
+        System.out.println("___________________");
+        System.out.println("Top 3 Student");
+        students.stream().sorted((s1,s2)->Double.compare(s2.getAverageMarks(), s1.getAverageMarks()))
+                .limit(3).forEach(System.out::println);
+        System.out.println("__________");
+        System.out.println("Average Grade in Each Student");
+        students.stream().collect(Collectors.groupingBy(Student::getDepartment,
+                        Collectors.averagingDouble(Student::getAverageMarks)))
+                .forEach((department, avgMarks) -> System.out.println(department + ": " + avgMarks));
+        System.out.println("____________");
+        System.out.println("Top Student in Each Department");
+        students.stream().collect(Collectors.groupingBy(Student::getDepartment,
+                        Collectors.maxBy(Comparator.comparingDouble(Student::getAverageMarks))))
+                .forEach((department,topStudent)->
+                        System.out.println(department+" : "+topStudent.get().getName()));
+        System.out.println("____________");
+        System.out.println("Failed Student");
+        students.stream().filter(student -> student.getAverageMarks()>50)
+                .collect(Collectors.groupingBy(Student::getDepartment,Collectors.counting())).forEach((department,count)-> System.out.println(department+" : "+count));
+
     }
-
-    public static void average_marks(List<Student> students) {
-        students.stream()
-                .collect(Collectors.groupingBy(
-                        Student::getDepartment,
-                        Collectors.averagingDouble(Student::getAverage)
-                ))
-                .forEach((department, averageMarks) ->System.out.println(department + " : " + averageMarks));
-
-
-    }   public static void top_students(List<Student> students) {
-        students.stream()
-                .collect(Collectors.groupingBy(
-                        Student::getDepartment,
-                        Collectors.collectingAndThen(
-                                Collectors.maxBy((s1, s2) -> Double.compare(s1.getAverage(), s2.getAverage())),
-                                student -> student.orElse(null)
-                        )
-                ))
-                .forEach((department, topStudent) -> {
-                    if (topStudent != null) {
-                        System.out.println(department + " : " + topStudent.getName() + " average marks " + topStudent.getAverage());
-                    }
-                });
-    }
-    public static void failed(List<Student> students) {
-        students.stream()
-                .collect(Collectors.groupingBy(
-                        Student::getDepartment,
-                        Collectors.filtering(student -> student.getAverage() < 50, Collectors.counting())
-                ))
-                .forEach((department, count) -> System.out.println(department + " : " + count + " failed"));
-    }
-
-
 }
