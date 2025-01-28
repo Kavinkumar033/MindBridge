@@ -85,7 +85,7 @@ public class StreamExample {
                         System.out.println(department+" : "+topStudent.get().getName()));
         System.out.println("____________");
         System.out.println("Failed Student");
-        students.stream().filter(student -> student.getAverageMarks()>50)
+        students.stream().filter(student -> student.getAverageMarks()<50)
                 .collect(Collectors.groupingBy(Student::getDepartment,Collectors.counting())).forEach((department,count)-> System.out.println(department+" : "+count));
 
     }
