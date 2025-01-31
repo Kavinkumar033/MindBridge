@@ -45,3 +45,23 @@ To run the project, ensure you have Java installed and use a terminal or an IDE:
    - Execute the program:
      ```sh
      java MiniProject.StudentManagementSystem
+
+## File Format
+
+The student data is stored in a `.txt` file format. Each student record is written in a structured manner, ensuring that data can be easily read and modified when necessary. The format follows a standardized structure for consistency and ease of access.
+
+Each record is stored in the following format:
+```
+ID, Name, Age, Grade, Email
+```
+For example:
+```
+101, John Doe, 20, A, johndoe@example.com
+102, Jane Smith, 22, B, janesmith@example.com
+```
+
+The records are stored line by line in the `StudentsDataBase.txt` file, with each student's details separated by commas. This format allows for easy parsing and retrieval of student information when needed. Additionally, file handling operations ensure that new student records are appended to the file, existing records can be updated, and deleted records are removed effectively.
+
+
+
+
