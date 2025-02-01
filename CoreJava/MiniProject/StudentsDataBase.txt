@@ -1,2 +1,3 @@
-StudentsList{ID=2, Name='kavin', Age=23, Grade=A, Email='kavin@gmail.com'}
-StudentsList{ID=1, Name='kumar', Age=23, Grade=B, Email='kumar@gmail.com'}
+1,arjun,21,C,arjun@gmail.com
+2,zoro,21,A,zoro@gmail.com
+3,kavin,22,B,kavin@gmail.com
